@@ -17,25 +17,25 @@ def lb_right():
 def lb_move():
     if head.direction == "up":
         y = head.ycor()
-        head.sety(y + foot)
+        head.sety(y + speed)
     if head.direction == "down":
         y = head.ycor()
-        head.sety(y - foot)
+        head.sety(y - speed)
     if head.direction == "left":
         x = head.xcor()
-        head.setx(x - foot)
+        head.setx(x - speed)
     if head.direction == "right":
         x = head.xcor()
-        head.setx(x + foot)
+        head.setx(x + speed)
 
 delay = 0.1
 score = 0
 high_score = 0
 color = 0
-foot = 20
+speed = 20
 
 wn = turtle.Screen()
-wn.title("Snake Game")
+wn.title("Snake game")
 wn.bgcolor("black")
 wn.setup(width=600, height=600)
 wn.tracer(0)
@@ -48,11 +48,12 @@ head.penup()
 head.goto(0,0)
 head.direction = "stop"
 
-tabColor = ['red', 'orange', 'yellow', 'green', 'turquoise', 'blue', 'violet']
+tabColor = ['#970909', '#ff7f00', '#A8A819', '#0D860D', '#01D758', '#08AAAA', '#000092', '#690D69']
+color = tabColor[random.randint(0, 6)]
 food = turtle.Turtle()
 food.speed(0)
 food.shape("circle")
-food.color(tabColor[random.randint(0, 6)])
+food.color(color)
 food.penup()
 food.goto(0,100)
 segments = []
@@ -82,6 +83,7 @@ while True:
             segment.goto(1000, 1000)
         segments.clear()
         score = 0
+        speed = 20
         delay = 0.1
         pen.clear()
         pen.write("Score: {}  High Score: {}".format(score, high_score), align="center", font=("Courier", 24, "normal")) 
@@ -89,19 +91,15 @@ while True:
         x = random.randint(-275, 275)
         y = random.randint(-275, 275)
         food.goto(x,y)
-        food.color(tabColor[random.randint(0, 6)])
-        colorSnake = ['red', 'yellow', 'orange']
         if score % 4 == 0:
-            if color == 2:
-                color = 0
-            else:
-                color += 1
-            foot += 0.5
+            speed += 0.5
         new_segment = turtle.Turtle()
         new_segment.speed(0)
         new_segment.shape("square")
-        new_segment.color(colorSnake[color])
+        new_segment.color(color)
         new_segment.penup()
+        color = tabColor[random.randint(0, 6)]
+        food.color(color)
         segments.append(new_segment)
         delay -= 0.001
         score += 1
@@ -127,6 +125,7 @@ while True:
                 segment.goto(1000, 1000)
             segments.clear()
             score = 0
+            speed = 20
             delay = 0.1
             pen.clear()
             pen.write("Score: {}  High Score: {}".format(score, high_score), align="center", font=("Courier", 24, "normal"))
